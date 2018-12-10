@@ -15,11 +15,11 @@ void funrr(int pun );
 int main ()
 {
 ///////	declaracion de variables
-int u,i,j,k,n,m,c,pun;
+int u,i,j,b,k,n,m,c,pun;
 float mx2[1000],my2[1000],mz2[1000],dd[10], nD,nR,Es,Els[i],nDR,DR[i],x2,y2,z2,s,so,sf;
 float x,y,z,ro,rf,r;
 FILE *rd;
-FILE *le;
+
 //////////////////////////////////////////////////////////
 	rd=fopen("corrsmall.txt","r");//lectura del archivo con 1000 puntos
 	for(i=0;i<1000;i++){ 
@@ -33,6 +33,9 @@ FILE *le;
  	m=1;
  	so=0;
  	c=0;
+ 	for(i=0;i<1000;i++){
+ 		dd[i]=0;
+ 	}
 for(sf=50;sf<500;sf=sf+50){ //Avanza de rango en rango y analiza lo puntos de RR
  for(i=0;i<1000;i++){
  	
@@ -42,6 +45,7 @@ for(sf=50;sf<500;sf=sf+50){ //Avanza de rango en rango y analiza lo puntos de RR
 	 //printf("%f\n",s);
 	 if(s<sf && s>=so){
 	 	dd[c]++;
+	 //	printf("%f\n",dd[j]);
 	 }
 	// printf("%f\n",s);
 }
@@ -58,28 +62,33 @@ nD=1000000;
   funrr(pun);
   nR=pun*pun;
   float matx[pun],maty[pun],matz[pun],rr[pun];
-  le=fopen("ren.txt","r");
+  char name[8]={'r','e','n','.','t','x','t','\0'};//nombre del archivo que debo leer y debe de terminar en /0 porque es cuando el programa sabe cuando terminar de leer
+  FILE *le;
+  le=fopen(name,"r");
 	for(i=0;i<pun;i++){ 
 		fscanf(le,"%f\t %f\t %f\n",&x,&y,&z);
 		  matx[i]=x;
 		  maty[i]=y;
 		  matz[i]=z;
-			//printf("%i\t %f\t %f\t %f\n",i,matx[i],maty[i],matz[i]); 
+			printf("%i\t %f\t %f\t %f\n",i,matx[i],maty[i],matz[i]); 
 }
  fclose(le);
  	k=1;
  	ro=0;
  	c=0;
+ 		for(i=0;i<1000;i++){
+ 		rr[i]=0;
+ 	}
 for(rf=50;rf<500;rf=rf+50){//rango de 0 a 500 de 50 en 50
  for(i=0;i<pun;i++){
  	
  	for(j=k;j<pun;j++){
 
 	 r=sqrt((pow((matx[i]-matx[j]),2)+pow((maty[i]-maty[j]),2)+pow((matz[i]-matz[j]),2)));
-	 //printf("%f\n",r);
+	 printf("%f\n",r);
 	 if(r<rf && r>=ro){
 	 	rr[c]++;
-	 	printf("%f\n",rr[i]);
+	 	//printf("%f\n",rr[i]);
 	 }
 	// printf("%f\n",r);
 }
@@ -88,7 +97,7 @@ for(rf=50;rf<500;rf=rf+50){//rango de 0 a 500 de 50 en 50
 }
 ro=rf;
 }  
-printf("dd=%i\t rr=%i\t nD=%f\t nR=%f\n",dd,rr,nD,nR);
+
 /////////////////////// estimadoes eleccion 
     printf("Indica el tipo de estimador que deseas usar: \n");
     scanf("%i",&u);
@@ -104,14 +113,16 @@ printf("dd=%i\t rr=%i\t nD=%f\t nR=%f\n",dd,rr,nD,nR);
 
     case 2:
     	nDR=nR+nD;
-    	for(i=0;i<10;i++){
-			for(i=0;i<10;i++){
+    	for(b=0;b<10;b++){
+			for(j=0;j<10;j++){
 				Els[i]=0;
 				for(i=0;i<10;i++){
 
 					DR[i]=dd[i]+rr[i];
 						Els[i]=((dd[i]/nD)-(2*DR[i]/nDR)+(rr[i]/nR))/(rr[i]/nR);//estimador Landy
+								printf("dd=%i\t rr=%i\t nD=%f\t nR=%f\n nDR=%f\n DR=%f\n",dd[i],rr[i],nD,nR,nDR,DR[i]);
 								printf("%f\n",Els[i]);
+								
 }
 }
 			
