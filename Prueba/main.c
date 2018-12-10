@@ -15,7 +15,7 @@ void funrr(int pun );
 int main ()
 {
 ///////	declaracion de variables
-int u,i,j,k,n,m,c,pun;
+int u,i,j,b,k,n,m,c,pun;
 float mx2[1000],my2[1000],mz2[1000],dd[10], nD,nR,Es,Els[i],nDR,DR[i],x2,y2,z2,s,so,sf;
 float x,y,z,ro,rf,r;
 FILE *rd;
@@ -104,8 +104,8 @@ printf("dd=%i\t rr=%i\t nD=%f\t nR=%f\n",dd,rr,nD,nR);
 
     case 2:
     	nDR=nR+nD;
-    	for(i=0;i<10;i++){
-			for(i=0;i<10;i++){
+    	for(b=0;b<10;b++){
+			for(j=0;j<10;j++){
 				Els[i]=0;
 				for(i=0;i<10;i++){
 
